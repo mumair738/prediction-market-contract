@@ -12,4 +12,4 @@ yul = true
 [profile.default.optimizer_details.yulDetails]
 optimizerSteps = "dhfoDgvulfnTUtnIf[xa[r]EscLMcCTUtTOntnfDIulLculVcul[j]Tpeulxa[rul]xa[r]cLgvifCTUca[r]LSsTFOtfDnca[r]Iulc]jmul[jul]VcTOcul jmul"
 
-# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+# See more config https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
