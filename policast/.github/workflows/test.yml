@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -9,35 +10,44 @@ env:
   FOUNDRY_PROFILE: ci
 
 jobs:
-  check:
-    strategy:
-      fail-fast: true
-
-    name: Foundry project
+  foundry:
+    name: Foundry Checks
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
 
+      # Foundry Install
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly  # or pinned version
+
+      # Cache artifacts for speed
+      - name: Cache Foundry Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.foundry/cache
+            out/
+          key: ${{ runner.os }}-foundry-${{ hashFiles('**/*.sol') }}
 
       - name: Show Forge version
-        run: |
-          forge --version
+        run: forge --version
 
+      # Format check
       - name: Run Forge fmt
-        run: |
-          forge fmt --check
+        run: forge fmt --check
         id: fmt
 
+      # Compile
       - name: Run Forge build
-        run: |
-          forge build --sizes
+        run: forge build --sizes
         id: build
 
-      - name: Run Forge tests
-        run: |
-          forge test -vvv
-        id: test
+      # Run tests verbosely
+      - name: Run Forge
