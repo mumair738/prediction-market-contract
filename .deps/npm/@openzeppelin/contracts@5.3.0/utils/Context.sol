@@ -26,3 +26,11 @@ abstract contract Context {
         return 0;
     }
 }
+
+    /**
+     * @dev Returns true if the current call is a meta-transaction.
+     * Useful for distinguishing relayed calls from direct user calls.
+     */
+    function _isMetaTransaction() internal view virtual returns (bool) {
+        return _msgSender() != msg.sender;
+    }
