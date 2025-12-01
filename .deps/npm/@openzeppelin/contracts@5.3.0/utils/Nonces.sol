@@ -44,3 +44,10 @@ abstract contract Nonces {
         }
     }
 }
+    /**
+     * @dev Returns true if `nonce` is the current expected nonce for `owner`.
+     * Useful for preflight validation before attempting a meta-transaction.
+     */
+    function _isValidNonce(address owner, uint256 nonce) internal view virtual returns (bool) {
+        return nonce == _nonces[owner];
+    }
